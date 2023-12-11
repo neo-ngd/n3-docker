@@ -1,6 +1,6 @@
 #!/bin/sh
 
-nodeversion="v3.5.0"
+nodeversion="v3.6.2"
 pluginsversion=$nodeversion
 
 echo "Downloading neo node $nodeversion"
@@ -15,7 +15,6 @@ unzip ApplicationLogs.zip -d ./neo-cli/
 unzip RpcServer.zip -d ./neo-cli/
 unzip TokensTracker.zip -d ./neo-cli/
 
-
 sed -i "s/127.0.0.1/0.0.0.0/g" neo-cli/Plugins/RpcServer/config.json
 
 echo "Node Ready!"
@@ -29,4 +28,3 @@ echo "Node Ready!"
 #     wget https://github.com/neo-project/neo-modules/releases/download/$2/ApplicationLogs.zip
 #     wget https://github.com/neo-project/neo-modules/releases/download/$2/RpcServer.zip
 # fi
-
