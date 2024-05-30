@@ -1,12 +1,13 @@
 #!/bin/sh
 
-nodeversion="v3.6.2"
+nodeversion="v3.7.4"
 pluginsversion=$nodeversion
 
 echo "Downloading neo node $nodeversion"
-wget https://github.com/neo-project/neo-node/releases/download/$nodeversion/neo-cli-linux-x64.zip
+wget https://github.com/neo-project/neo/releases/download/$nodeversion/neo-cli-linux-x64.zip
 unzip neo-cli-linux-x64.zip -d ./
-
+mv neo-cli-linux-x64 neo-cli
+ 
 echo "Downloading plugins $pluginsversion"
 wget https://github.com/neo-project/neo-modules/releases/download/$pluginsversion/ApplicationLogs.zip
 wget https://github.com/neo-project/neo-modules/releases/download/$pluginsversion/RpcServer.zip

@@ -8,7 +8,7 @@ WORKDIR /neo
 COPY prepare-node.sh .
 RUN sh ./prepare-node.sh
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS Final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0.6 AS Final
 RUN apt-get update && apt-get install -y screen \
     curl \
     && rm -rf /var/lib/apt/lists/*
