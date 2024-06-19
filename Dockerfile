@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 as Build
+FROM ubuntu:22.04 as Build
 RUN apt-get update && apt-get install -y wget \
     unzip \
     sed \
