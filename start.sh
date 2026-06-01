@@ -1,8 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-# run app in background
-screen -dmS node dotnet neo-cli.dll
+cd /neo
 
-# keep container runnning 
-tail -f /dev/null
-# sleep infinitys
+rm -f neo.log
+
+screen -L -Logfile neo.log -dmS neo ./neo-cli/neo-cli
+
+while [ ! -f neo.log ]; do
+  sleep 0.5
+done
+
+tail -f neo.log

@@ -1,31 +1,22 @@
-#!/bin/sh
+echo "Downloading neo node $1"
+wget  https://github.com/neo-project/neo-node/releases/download/$1/neo-cli-linux-x64.zip
+unzip neo-cli-linux-x64.zip
 
-nodeversion="v3.7.5"
-pluginsversion=$nodeversion
 
-echo "Downloading neo node $nodeversion"
-wget https://github.com/neo-project/neo/releases/download/$nodeversion/neo-cli-linux-x64.zip
-unzip neo-cli-linux-x64.zip -d ./
-mv neo-cli-linux-x64 neo-cli
- 
-echo "Downloading plugins $pluginsversion"
-wget https://github.com/neo-project/neo-modules/releases/download/$pluginsversion/ApplicationLogs.zip
-wget https://github.com/neo-project/neo-modules/releases/download/$pluginsversion/RpcServer.zip
-wget https://github.com/neo-project/neo-modules/releases/download/$pluginsversion/TokensTracker.zip
-unzip ApplicationLogs.zip -d ./neo-cli/
-unzip RpcServer.zip -d ./neo-cli/
-unzip TokensTracker.zip -d ./neo-cli/
+if [ -z "$2" ]; then
+    echo "Downloading plugins $1"
+    wget https://github.com/neo-project/neo-node/releases/download/$1/ApplicationLogs.zip
+    wget https://github.com/neo-project/neo-node/releases/download/$1/RpcServer.zip
+    wget https://github.com/neo-project/neo-node/releases/download/$1/TokensTracker.zip
+else
+    echo "Downloading plugins $2"
+    wget https://github.com/neo-project/neo-node/releases/download/$2/ApplicationLogs.zip
+    wget https://github.com/neo-project/neo-node/releases/download/$2/RpcServer.zip
+    wget https://github.com/neo-project/neo-node/releases/download/$2/TokensTracker.zip
+fi
 
-sed -i "s/127.0.0.1/0.0.0.0/g" neo-cli/Plugins/RpcServer/config.json
+unzip -n ApplicationLogs.zip -d ./neo-cli/
+unzip -n RpcServer.zip -d ./neo-cli/
+unzip -n TokensTracker.zip -d ./neo-cli/
 
 echo "Node Ready!"
-
-# if [ -z "$2" ]; then
-#     echo "Downloading plugins $plguinsversion"
-#     wget https://github.com/neo-project/neo-modules/releases/download/$plguinsversion/ApplicationLogs.zip
-#     wget https://github.com/neo-project/neo-modules/releases/download/$plguinsversion/RpcServer.zip
-# else
-#     echo "Downloading plugins $2"
-#     wget https://github.com/neo-project/neo-modules/releases/download/$2/ApplicationLogs.zip
-#     wget https://github.com/neo-project/neo-modules/releases/download/$2/RpcServer.zip
-# fi
