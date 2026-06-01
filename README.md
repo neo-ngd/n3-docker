@@ -1,25 +1,52 @@
-# N3-Docker
+# Neo CLI Docker Usage Examples
 
-## Quick Start
+## Example 1: Install CLI v3.9.2 (with matching plugins)
 
-You can use our default deployed images directly, see [n3-docker](https://github.com/neo-ngd/n3-docker/pkgs/container/n3-docker).
-The default node contains ApplicationLogs and RpcServer Plugins(see **prepare-node.sh**).
+```bash
+# Build the image (v3.9.2 is the default)
+docker build -t v3.9.2 .
 
-```shell
-docker run -dit --name n3-node -p 10332-10334:10332-10334 ghcr.io/neo-ngd/n3-docker:latest
+# Run the container
+docker run -d -p 10332:10332 --name neo-node v3.9.2
+
+# Enter the container and test
+docker exec -it neo-node bash
+curl -X POST http://localhost:10332 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"getblockcount","params":[],"id":1}'
 ```
 
-## Manual Build
+## Example 2: Install CLI v3.9.2 with Plugin v3.9.0
 
-You can change the scripts and build your own docker images.
+```bash
+# Build the image
+docker build -t v3.9.2-plugins-3.9.0 --build-arg PLUGIN_VERSION=v3.9.0 .
 
-```shell
-docker build -t neo-cli .
-docker run -dit --name n3-node -p 10332-10334:10332-10334 neo-cli
+# Run the container
+docker run -d -p 10332:10332 --name neo-node v3.9.2-plugins-3.9.0
+
+# Enter the container and test
+docker exec -it neo-node bash
+curl -X POST http://localhost:10332 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"getblockcount","params":[],"id":1}'
 ```
 
-## File Description
+## Example 3: Install CLI v3.10.0 (with matching plugins)
 
-- **Dockerfile**: Docker build file
-- **prepare-node.sh**: Download node and plugins files, update `nodeversion` after NEO release new version node and plugins.
-- **start.sh**: Container start script, start node with `screen`
+```bash
+# Build the image
+docker build -t v3.10.0 --build-arg CLI_VERSION=v3.10.0 .
+
+# Run the container
+docker run -d -p 10332:10332 --name neo-node v3.10.0
+
+# Enter the container and test
+docker exec -it neo-node bash
+curl -X POST http://localhost:10332 -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"getblockcount","params":[],"id":1}'
+```
+
+## Quick Test Command
+
+Once inside the container, you can also use:
+```bash
+curl http://localhost:10332 -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"getblockcount","params":[],"id":1}'
+```
+
+This will return the current block count, confirming the CLI is running and responding to RPC calls.
